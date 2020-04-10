@@ -26,6 +26,9 @@ PLAYER com = { "コンピュータ" };
 
 void shuffle(void);
 int random(int min, int max);
+void vs(void);
+
+int turn;
 
 int card[36] = { 3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,5,5,5,5,5,5,5,6,6,6,6,6,6,6,7,7,7,7,7,7,7 };
 
@@ -45,6 +48,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ScreenFlip();
 
 	shuffle();
+	vs();
 
 	WaitKey();
 	DxLib_End();
@@ -119,4 +123,21 @@ void shuffle(void)
 int random(int min, int max)
 {
 	return min + (int)(rand() * (max - min + 1.0) / (1.0 + RAND_MAX));
+}
+
+void vs(void)
+{
+	srand((unsigned int)time(NULL));
+	you.attack = rand() % 10 + 1;
+
+	if (you.attack % 2 == 0)
+	{
+		LoadGraphScreen(10, 10, "you.png", TRUE);
+		ScreenFlip();
+		turn = 0;
+	}
+	else
+	{
+		turn = 1;
+	}
 }
